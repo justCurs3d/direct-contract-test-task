@@ -1,4 +1,4 @@
-db = new Mongo().getDB('direct-contact');
+db = new Mongo().getDB('direct-contract');
 
 db.createUser({
     user: 'service',
@@ -6,7 +6,7 @@ db.createUser({
     roles: [
         {
             role: 'readWrite',
-            db: 'direct-contact',
+            db: 'direct-contract',
         },
     ],
 });

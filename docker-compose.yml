@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  mongodb:
+  mongo:
     image: mongo:7.0
     container_name: db
     restart: always
@@ -12,4 +12,17 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=root
-      - MONGO_INITDB_DATABASE=direct-contact
+      - MONGO_INITDB_DATABASE=direct-contract
+
+  api:
+    build: "."
+    restart: always
+    container_name: api
+    ports:
+      - 3000:3000
+    depends_on:
+      - mongo
+    environment:
+      - NODE_ENV=${NODE_ENV}
+      - PORT=3030
+    command: cross-env NODE_ENV=${NODE_ENV} supervisor node dist/main.js
