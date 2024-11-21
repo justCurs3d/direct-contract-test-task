@@ -1,51 +1,92 @@
-db = new Mongo().getDB("direct-contact");
+db = new Mongo().getDB('direct-contact');
 
-db.createUser(
-  {
-    user: "service",
-    pwd: "service",
+db.createUser({
+    user: 'service',
+    pwd: 'service',
     roles: [
-      {
-        role: "readWrite",
-        db: "direct-contact"
-      }
-    ]
-  }
-)
-
-// Создание коллекции users
-db.users.insertMany([
-    { username: "user1" },
-    { username: "user2" }
-]);
+        {
+            role: 'readWrite',
+            db: 'direct-contact',
+        },
+    ],
+});
 
 // Функция для генерации случайных данных клиента
 function getRandomClientData(id) {
     // Наборы имен для мужчин и женщин
-    const maleFirstNames = ["Michael", "Ethan", "Jackson", "Oliver", "James", "William", "Joshua", "Daniel", "Luke", "Andrew"];
-    const femaleFirstNames = ["Sophia", "Isabella", "Ava", "Mia", "Olivia", "Ella", "Chloe", "Lily", "Grace", "Zoe"];
-    
-    const lastNames = ["Abernathy", "Kuhn", "Dickinson", "Smith", "Johnson", "Brown", "Taylor", "Anderson", "Thomas", "Jackson"];
-    
-    const genders = ["male", "female"];
-    
-    const cities = ["Port Logan", "Fort Jordi", "Rickyberg", "Harrisland", "New Versailles", "Port Thalia", "Lake Lang", "East Alana", "South Alex", "North Henry"];
-    
-    const addresses = ["00606 Keyshawn Crossing", "37119 Strosin Avenue", "08178 Bradtke Tunnel", "Location A", "Location B", "Location C", "Location D", "Location E", "Location F", "Location G", "Location H"];
+    const maleFirstNames = [
+        'Michael',
+        'Ethan',
+        'Jackson',
+        'Oliver',
+        'James',
+        'William',
+        'Joshua',
+        'Daniel',
+        'Luke',
+        'Andrew',
+    ];
+    const femaleFirstNames = ['Sophia', 'Isabella', 'Ava', 'Mia', 'Olivia', 'Ella', 'Chloe', 'Lily', 'Grace', 'Zoe'];
+
+    const lastNames = [
+        'Abernathy',
+        'Kuhn',
+        'Dickinson',
+        'Smith',
+        'Johnson',
+        'Brown',
+        'Taylor',
+        'Anderson',
+        'Thomas',
+        'Jackson',
+    ];
+
+    const genders = ['male', 'female'];
+
+    const cities = [
+        'Port Logan',
+        'Fort Jordi',
+        'Rickyberg',
+        'Harrisland',
+        'New Versailles',
+        'Port Thalia',
+        'Lake Lang',
+        'East Alana',
+        'South Alex',
+        'North Henry',
+    ];
+
+    const addresses = [
+        '00606 Keyshawn Crossing',
+        '37119 Strosin Avenue',
+        '08178 Bradtke Tunnel',
+        'Location A',
+        'Location B',
+        'Location C',
+        'Location D',
+        'Location E',
+        'Location F',
+        'Location G',
+        'Location H',
+    ];
+
+    const statuses = ['Do not disturb', 'Offline', 'Busy', 'Online'];
 
     // Случайный выбор пола
     const gender = genders[Math.floor(Math.random() * genders.length)];
-    
+
     // Выбор имени в зависимости от пола
-    const firstName = gender === "male" 
-        ? maleFirstNames[Math.floor(Math.random() * maleFirstNames.length)] 
-        : femaleFirstNames[Math.floor(Math.random() * femaleFirstNames.length)];
-    
+    const firstName =
+        gender === 'male'
+            ? maleFirstNames[Math.floor(Math.random() * maleFirstNames.length)]
+            : femaleFirstNames[Math.floor(Math.random() * femaleFirstNames.length)];
+
     const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
     const address = addresses[Math.floor(Math.random() * addresses.length)];
     const city = cities[Math.floor(Math.random() * cities.length)];
-    const phone = "501-" + Math.floor(Math.random() * 1000) + "-" + Math.floor(Math.random() * 1000);
-    const email = firstName.toLowerCase() + "_" + lastName.toLowerCase() + id + "@example.com";
+    const status = statuses[Math.floor(Math.random() * statuses.length)];
+    const phone = '501-' + Math.floor(Math.random() * 1000) + '-' + Math.floor(Math.random() * 1000);
+    const email = firstName.toLowerCase() + '_' + lastName.toLowerCase() + id + '@example.com';
 
     return {
         id: id, // Упорядоченный ID
@@ -55,10 +96,10 @@ function getRandomClientData(id) {
         address: address,
         city: city,
         phone: phone,
-        email: email
-    }
+        email: email,
+        status: status,
+    };
 }
-
 
 // Генерация 3000 клиентов
 const clientsData = [];
